@@ -23,12 +23,13 @@ public class Usuario implements UserDetails {
    private String username;
     @Column(name = "password")
    private String password;
+    @Getter
     @Column(name = "role")
    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return null;
     }
 
     @Override
