@@ -3,6 +3,7 @@ package aula.security.config;
 import aula.security.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.lang.reflect.Method;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +28,8 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/livre").permitAll()
+                        .requestMatchers("/api/usuarios").permitAll()
+                        .requestMatchers("api/teste").permitAll()
                         .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
 
@@ -41,6 +45,11 @@ public class SecurityConfig {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+//    protected void auth(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(usuarioService);
+//    }
+
 
    /* @Bean
     UserDetailsService user() {
