@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UsuarioController {
 
+
     @Autowired
     private UsuarioService usuarioService;
 
@@ -21,6 +22,7 @@ public class UsuarioController {
     @PostMapping("/usuarios")
     public ResponseEntity<?> cadastrar(@RequestBody Usuario usuario) {
         try {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             System.out.println(usuario.getUsername());
             usuarioService.save(usuario);
             return new ResponseEntity<>(HttpStatus.CREATED);

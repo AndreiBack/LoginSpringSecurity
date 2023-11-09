@@ -25,13 +25,15 @@ public class SecurityConfig {
     private UsuarioService usuarioService;
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf->csrf.disable());
         http
+
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/api/usuarios").permitAll()
-                        .requestMatchers("api/teste").permitAll()
                         .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
+
 
         return http.build();
     }
@@ -46,8 +48,9 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    protected void auth(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(usuarioService);
+   protected void auth(AuthenticationManagerBuilder auth) throws Exception {
+       auth.userDetailsService(usuarioService);
+   }
 //    }
 
 
